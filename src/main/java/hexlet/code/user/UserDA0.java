@@ -5,6 +5,8 @@ import hexlet.code.User;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 // Импорт User
 
@@ -62,6 +64,21 @@ public class UserDA0 {
         try (var DelState = connection.prepareStatement(deleteSql)) {
             DelState.setLong(1, id);
             DelState.executeUpdate();
+        }
+    }
+
+    public Optional<List<User>> getEntities() throws SQLException {
+        var sql = "SELECT * FROM users";
+        List<User> result = new ArrayList<>();
+        try (var stmt = connection.prepareStatement(sql)) {
+            var resultSet = stmt.executeQuery();
+            while (resultSet.next()) {
+                var username = resultSet.getString("username");
+                var phone = resultSet.getString("phone");
+                var course = new User(username, phone);
+                result.add(course);
+            }
+            return Optional.of(result);
         }
     }
 }

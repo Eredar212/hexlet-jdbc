@@ -32,8 +32,11 @@ public class Main {
         System.out.println(userDa0.find(2L));
         System.out.println(userDa0.find(3L));
 
-        userDa0.delete(2L);
+       // userDa0.delete(2L);
         printUsers(conn);
+
+
+        System.out.println(userDa0.getEntities());
         // Закрываем соединение
         conn.close();
     }
